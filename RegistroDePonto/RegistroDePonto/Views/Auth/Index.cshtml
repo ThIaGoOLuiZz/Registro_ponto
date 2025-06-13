@@ -1,0 +1,166 @@
+﻿@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #f4f6f8;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .login-card {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 16px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+        }
+
+        .login-title {
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            color: #222;
+        }
+
+            .login-title i {
+                font-size: 1.4rem;
+                margin-right: 0.5rem;
+                color: #0d6efd;
+            }
+
+        .form-label {
+            font-weight: 500;
+        }
+
+        .form-control {
+            background-color: #f1f3f5;
+            border: 1px solid #ced4da;
+            color: #333;
+            border-radius: 8px;
+            padding: 0.6rem 0.75rem;
+        }
+
+            .form-control::placeholder {
+                color: #888;
+            }
+
+            .form-control:focus {
+                background-color: #fff;
+                border-color: #86b7fe;
+                box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+            }
+
+        .btn-custom {
+            background-color: #0d6efd;
+            color: #fff;
+            border: none;
+            width: 100%;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+            .btn-custom:hover {
+                background-color: #0b5ed7;
+            }
+
+        .alert {
+            background-color: #f8d7da;
+            border: 1px solid #f5c2c7;
+            color: #842029;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+            .alert i {
+                font-size: 1.2rem;
+            }
+
+        .btn-close {
+            margin-left: auto;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        .btn-custom-blue {
+            background-color: #ffffff;
+            color: #0d6efd;
+            border: 2px solid #0d6efd;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            display: block;
+            width: 100%; /* igual aos inputs */
+        }
+
+            .btn-custom-blue:hover {
+                background-color: #0d6efd;
+                color: #ffffff;
+            }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <div class="login-title">
+            <i class="fas fa-user-circle"></i> Login
+        </div>
+
+        @if (TempData["ErroLogin"] != null)
+        {
+            <div class="alert alert-dismissible fade show" role="alert">
+                <i class="fas fa-exclamation-triangle"></i>
+                @TempData["ErroLogin"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+            </div>
+        }
+
+        <form method="post" action="/Auth/Login">
+            <div class="mb-3">
+                <label for="matricula" class="form-label">Matrícula</label>
+                <input type="number" class="form-control" id="matricula" name="Matricula" placeholder="Digite sua matrícula" required />
+            </div>
+
+            <div class="mb-4">
+                <label for="senha" class="form-label">Senha</label>
+                <input type="password" class="form-control" id="senha" name="Senha" placeholder="Digite sua senha" required />
+            </div>
+
+            <button type="submit" class="btn btn-custom-blue">Entrar</button>
+        </form>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

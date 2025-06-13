@@ -1,0 +1,109 @@
+﻿@model List<Funcionario>
+
+@{
+    ViewData["Title"] = "Painel do Administrador";
+    Layout = "_Layout"; // use seu layout padrão
+}
+
+<style>
+    body {
+        background-color: #f5f6fa;
+        color: #333;
+    }
+
+    .admin-panel {
+        padding: 2rem;
+    }
+
+    .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+    }
+
+        .panel-header h2 {
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+    .btn-custom {
+        border-radius: 6px;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+    }
+
+    .table-container {
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th {
+        text-align: left;
+        padding: 12px;
+        font-weight: 600;
+        border-bottom: 2px solid #dee2e6;
+        background-color: transparent;
+        color: #444;
+    }
+
+    td {
+        padding: 12px;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+    tr:hover {
+        background-color: #f8f9fa;
+    }
+</style>
+
+<div class="admin-panel">
+    <div class="panel-header">
+        <h2>Painel de Administração</h2>
+        <div class="d-flex flex-wrap gap-2">
+            <a class="btn btn-outline-success btn-custom" asp-action="CadastrarFuncionario">
+                <i class="fas fa-user-plus me-1"></i> Novo Funcionário
+            </a>
+            <a class="btn btn-outline-primary btn-custom" asp-action="GerarRelatorioPDF">
+                <i class="fas fa-file-pdf me-1"></i> Relatório PDF
+            </a>
+            <form method="post" asp-action="Logoff" class="d-inline">
+                <button type="submit" class="btn btn-outline-danger btn-custom">
+                    <i class="fas fa-sign-out-alt me-1"></i> Sair
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Matrícula</th>
+                    <th>Nome Completo</th>
+                    <th>Perfil</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var funcionario in Model)
+                {
+                    <tr>
+                        <td>@funcionario.Matricula</td>
+                        <td>@funcionario.NomeCompleto</td>
+                        <td>@funcionario.Perfil</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">

@@ -1,0 +1,181 @@
+﻿@model Funcionario
+
+@{
+    ViewData["Title"] = "Registro de Ponto";
+    Layout = "_Layout"; // ou null
+}
+
+<style>
+    body {
+        background-color: #f4f6f8;
+        color: #333;
+    }
+
+    .registro-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        background-color: #ffffff;
+        padding: 2.5rem;
+        border-radius: 16px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    }
+
+    h2, h4 {
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+    }
+
+    .btn-custom {
+        border-radius: 6px;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .btn-outline-danger:hover {
+        background-color: #dc3545;
+        color: #fff;
+    }
+
+    .btn-primary {
+        background-color: #0d6efd;
+        color: #fff;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+        }
+
+    .alert {
+        background-color: #fff3cd;
+        border: 1px solid #ffeeba;
+        color: #856404;
+        border-radius: 8px;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+    }
+
+        .alert i {
+            font-size: 1.2rem;
+        }
+
+    .table {
+        background-color: #ffffff;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+        .table thead th {
+            background-color: #e9ecef;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .table td, .table th {
+            padding: 0.75rem;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+    .logoff-button {
+        display: flex;
+        justify-content: end;
+        margin-bottom: 1.5rem;
+    }
+
+    .batida-buttons .btn {
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .btn-custom-blue {
+        background-color: #ffffff;
+        color: #0d6efd;
+        border: 2px solid #0d6efd;
+        padding: 0.6rem 1rem;
+        border-radius: 8px;
+        font-weight: 500;
+        width: 100%;
+        transition: background-color 0.2s ease, color 0.2s ease;
+        display: block;
+        text-align: center;
+    }
+
+        .btn-custom-blue:hover {
+            background-color: #0d6efd;
+            color: #ffffff;
+        }
+</style>
+
+<div class="registro-container">
+    <div class="logoff-button d-flex justify-content-between align-items-center mb-4">
+        <h2 class="m-0">Registro de Ponto</h2>
+        <form method="post" asp-action="Logoff" class="d-inline">
+            <button type="submit" class="btn btn-outline-danger btn-custom">
+                <i class="fas fa-sign-out-alt me-1"></i> Sair
+            </button>
+        </form>
+    </div>
+
+    
+
+    @if (TempData["Erro"] != null)
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle"></i> @TempData["Erro"]
+            <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Fechar"></button>
+        </div>
+    }
+
+    <form method="post" asp-action="BaterPonto" class="mb-4">
+        <div class="batida-buttons d-grid gap-2">
+            <button name="batida" value="EntradaManha" class="btn btn-custom-blue" type="submit">
+                <i class="fas fa-sign-in-alt me-1"></i> Entrada Manhã
+            </button>
+            <button name="batida" value="SaidaManha" class="btn btn-custom-blue" type="submit">
+                <i class="fas fa-sign-out-alt me-1"></i> Saída Manhã
+            </button>
+            <button name="batida" value="EntradaTarde" class="btn btn-custom-blue" type="submit">
+                <i class="fas fa-sign-in-alt me-1"></i> Entrada Tarde
+            </button>
+            <button name="batida" value="SaidaTarde" class="btn btn-custom-blue" type="submit">
+                <i class="fas fa-sign-out-alt me-1"></i> Saída Tarde
+            </button>
+        </div>
+    </form>
+
+    <h4>Batidas de Hoje</h4>
+
+    <div class="table-responsive">
+        <table class="table table-bordered align-middle">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Hora</th>
+                    <th>Tipo de Batida</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var registro in ViewBag.RegistrosPonto)
+                {
+                    <tr>
+                        <td>@registro.DataRegistro.ToString("dd/MM/yyyy")</td>
+                        <td>@TimeSpanToHora(registro.HoraBatida)</td>
+                        <td>@registro.TipoBatida</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@functions {
+    string TimeSpanToHora(TimeSpan hora)
+    {
+        return new DateTime(hora.Ticks).ToString("HH:mm:ss");
+    }
+}

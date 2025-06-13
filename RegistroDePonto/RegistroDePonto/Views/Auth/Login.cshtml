@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Login</h2>
+
+<form method="post" action="/Auth/Login">
+    <div class="mb-3">
+        <label for="matricula" class="form-label">Matrícula</label>
+        <input type="number" class="form-control" id="matricula" name="Matricula" required />
+    </div>
+    <div class="mb-3">
+        <label for="senha" class="form-label">Senha</label>
+        <input type="password" class="form-control" id="senha" name="Senha" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Entrar</button>
+</form>
